@@ -1,8 +1,8 @@
-import "styles/globals.css";
+import "public/styles/globals.css";
 
 const layout = () => {
   return (
-    <div>Home</div>
+    <div className="text">Home</div>
   )
 }
 

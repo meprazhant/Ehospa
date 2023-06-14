@@ -1,0 +1,128 @@
+
+ @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+
+.text {
+  color: red;
+  text-align: center;
+}   
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4b4b4b;
+  padding: 5px;
+  margin: 7px;
+  border-radius: 15px;
+}
+
+.logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 15px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin-left: 16px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 16px;
+  font-family: 'Roboto', sans-serif;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.nav-link:hover{
+  color: skyblue;
+}
+.login-btn {
+  background-color: #ee9b3d;
+  color: #000000;
+  font-weight: bold;
+  padding: 7px 14px;
+  border-radius: 15px;
+  cursor: pointer;
+  border:1px solid #fff;
+  margin-right: 15px;
+}
+
+.login-btn:hover {
+  background-color: #f1f1f1;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.left {
+  flex: 1;
+  text-align: left;
+}
+
+.middle {
+  flex: 1;
+  text-align: center;
+}
+
+.right {
+  flex: 1;
+  text-align: right;
+}
+
+button {
+  margin-top: 10px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+.text1{
+  font-size:45px;
+  color: red;
+}
+.text2{
+  font-size:45px;
+  text-transform: uppercase;
+}
+.btn1{
+  background-color: rgb(33, 88, 237);
+  margin: 15px;
+  padding:10px;
+   border-radius: 15px;
+}
