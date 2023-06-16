@@ -1,5 +1,5 @@
 
- @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -125,4 +125,52 @@ img {
   margin: 15px;
   padding:10px;
    border-radius: 15px;
+}
+.abouttext{
+  text-align: center;
+  margin: 20px;
+  font-size: 40px;
+}
+  .container1 ,.container2{
+    display: flex;
+    margin: 20px ;
+    flex-direction: row;
+  }
+.left-box1,
+.left-box2,
+.left-box3,
+.right-box1,
+.right-box2,
+.right-box3 {
+  margin: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+.left-box1:hover,
+.left-box2:hover,
+.left-box3:hover,
+.right-box1:hover,
+.right-box2:hover,
+.right-box3:hover {
+  background-color: #3d3d3d;
+  transform: scale(1.05);
+}
+.left-box1 p,
+.left-box2 p,
+.right-box2,
+.right-box3 p {
+  margin: 0;
+}
+
+.left-box3 img,
+.right-box1 img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }

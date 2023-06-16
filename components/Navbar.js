@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import "public/styles/globals.css";
 
 const Navbar = () => {
@@ -7,8 +8,8 @@ const Navbar = () => {
       <div className="logo">EHospa</div>
 
       <ul className="nav-links">
-        <li><a href="#" className="nav-link">Home</a></li>
-        <li><a href="#" className="nav-link">About</a></li>
+        <li><Link href="/" className="nav-link">Home</Link></li>
+        <li><Link href="/about">About</Link></li>
         <li><a href="#" className="nav-link">Doctors</a></li>
       </ul>
 
