@@ -174,3 +174,39 @@ img {
   max-height: 100%;
   object-fit: contain;
 }
+.containers {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.column {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  width: 200px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.card img {
+  width: 200px;
+  height: 200px;
+  border-radius:20px;
+  object-fit: cover;
+}
+
+.card h3 {
+  margin-top: 10px;
+}
+
+.card p {
+  margin-top: 10px;
+  color: #555;
+  font-size: 14px;
+}
