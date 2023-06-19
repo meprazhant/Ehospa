@@ -187,18 +187,20 @@ img {
 }
 
 .card {
-  width: 200px;
+  width: 300px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
+  margin: auto;
 }
 
 .card img {
-  width: 200px;
+  width: 250px;
   height: 200px;
   border-radius:20px;
   object-fit: cover;
+  margin: auto;
 }
 
 .card h3 {
