@@ -18,7 +18,7 @@ const Home = () => {
         <button className='btn1'>BOOK A APPOINTMENT</button>
       </div>
       <div className='right'>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Doctor_with_Nurse_Cartoon.svg/1200px-Doctor_with_Nurse_Cartoon.svg.png" alt="" />
+        <img src="https://i.pinimg.com/originals/cf/d9/98/cfd9988c2826d5638ee5f88774e060cc.png" alt="" />
       </div>
     </div>
     </div>
