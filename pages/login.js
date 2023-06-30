@@ -1,8 +1,15 @@
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import "public/styles/globals.css";
 import Navbar from "../components/Navbar";
 
 const LoginPage = () => {
+  const router = useRouter();
+
+  const handleGoogleSignIn = async () => {
+    router.push("/");
+  };
+
   return (
     <div>
       <Navbar />
@@ -21,7 +28,7 @@ const LoginPage = () => {
           <div className="button-container">
             <button
               className="login-button google"
-              onClick={() => signIn("google")}
+              onClick={handleGoogleSignIn}
             >
               Login with Google
             </button>
@@ -42,4 +49,6 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
 
