@@ -16,6 +16,12 @@ function appointment() {
         }
     }, [session])
 
+    useEffect(() => {
+        if (router.query.for) {
+            //
+        }
+    }, [router.query.for])
+
     return (
         <div className='min-h-full w-full'>
             <div className='flex justify-center'>
