@@ -5,6 +5,8 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/compos/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -15,12 +17,10 @@ module.exports = {
       },
     },
   },
-  theme: {
-    extend: {},
-  },
   variants: {},
   plugins: [
     require('tailwindcss'),
     require('autoprefixer'),
+    require('daisyui'),
   ],
 }
