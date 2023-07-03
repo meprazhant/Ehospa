@@ -68,7 +68,7 @@ function Form({ data }) {
     }
 
     return (
-        <section className="relative w-4/6 flex flex-wrap lg:h-screen lg:items-center">
+        <section className="relative w-4/6 flex flex-wrap lg:h-screen lg:items-center ">
             <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
                 <div className="mx-auto max-w-lg text-center">
                     <h1 className="text-2xl font-bold sm:text-3xl">Book Your Appointment!</h1>
@@ -136,7 +136,7 @@ function Form({ data }) {
 
                     <div>
                         <label htmlFor="name" className="sr-only"></label>
-                        <select onChange={(e) => getData(e)} name="specialist" id="" classNameName='select p-2 bg-black border-gray-600 '>
+                        <select onChange={(e) => getData(e)} name="specialist" id="" className='select p-2 bg-black border-gray-600'>
                             <option value="">Select</option>
                             <option value="general">General/ सामान्य</option>
                             <option value="dental">Dental/ दन्त</option>
