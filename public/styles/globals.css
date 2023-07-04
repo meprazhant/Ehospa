@@ -185,3 +185,27 @@ body {
 .relative input {
   color: white !important;
 }
+
+.chatBox {
+  transition: all 0.5s ease-in-out;
+}
+
+.apmode {
+  animation: apanim 1s ease-in-out;
+  background-color: #166534;
+
+}
+
+@keyframes apanim {
+  0% {
+    width: 83.333333%;
+    background-color: #1F2937;
+  }
+
+  100% {
+    width: 50%;
+    background-color: #166534;
+
+  }
+
+}

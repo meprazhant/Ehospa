@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+import Appointmentmode from './Appointmentmode'
 
 function AIresponse({ response }) {
     return (
@@ -8,7 +10,7 @@ function AIresponse({ response }) {
                 <div
                     className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
                 >
-                    A
+                    AI
                 </div>
                 <div
                     className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
@@ -27,9 +29,9 @@ function Humanresponse({ response }) {
         <div className="col-start-6 col-end-13 p-3 rounded-lg">
             <div className="flex items-center justify-start flex-row-reverse">
                 <div
-                    className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                    className="flex items-center justify-center h-10 w-10 rounded-full bg-green-500 flex-shrink-0"
                 >
-                    A
+                    ME
                 </div>
                 <div
                     className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl"
@@ -42,11 +44,23 @@ function Humanresponse({ response }) {
 }
 
 function Assistant() {
+    var session = useSession()
     var [response, setResponse] = useState('')
     var [messageData, setMessageData] = useState([])
+    var [userData, setUserData] = useState(null)
     var [bookApp, setBookApp] = useState(false)
+    var [appointmentMode, setAppointmentMode] = useState(false)
+    var [appointLoading, setAppointLoading] = useState(false)
     var [specialist, setSpecialist] = useState('')
     var router = useRouter()
+
+    useEffect(() => {
+        if (session.status === 'unauthenticated') {
+            router.push('/login')
+        } else if (session.status === 'authenticated') {
+            setUserData(session.data.user)
+        }
+    }, [session])
 
     function sendResponse() {
         if (!!response) {
@@ -102,11 +116,16 @@ function Assistant() {
                     'type': 'ai'
                 }
                 setMessageData([...messageData, messagejson, AIjson])
-                setResponse('')
+                setAppointLoading(true)
                 setTimeout(() => {
-                    router.push('/appointment?for=' + specialist)
-                }, 5000);
+                    setAppointLoading(false)
+                }, 3000);
                 setBookApp(false)
+                setAppointmentMode(true)
+                setResponse(messageData[messageData.length - 2].message)
+                setTimeout(() => {
+                    setResponse('')
+                }, 15000);
                 return
             }
 
@@ -147,10 +166,8 @@ function Assistant() {
         })
             .then(response => response.json())
             .then(data => {
-                var result = data.data.choices[0].text
-
-                var result = result.replace(/(\r\n|\n|\r)/gm, "")
-                setSpecialist(result)
+                var result = data.data
+                setSpecialist(data.data)
                 result = 'You should Visit a ' + result + ' for your problem. Do you Want me to book an Appointment for you?'
                 setBookApp(true)
                 var AIjson = {
@@ -165,9 +182,9 @@ function Assistant() {
     }
 
     return (
-        <div className='h-screen'>
+        <div className='h-screen flex justify-center items-center flex-col'>
             <h2 className='text p-5 sm:text-xl text-3xl text-warning font-bold'>Ask Dr. Cap, our GPT-3 Powered AI Doctor, assisting you with your problem</h2>
-            <div className="flex h-5/6 antialiased text-gray-800 ">
+            {(!appointmentMode) && <div className="chatBox flex h-5/6 w-3/4 antialiased text-gray-800 ">
                 <div className="flex flex-row h-full w-full overflow-x-hidden">
                     <div className="flex flex-col flex-auto h-full p-6">
                         <div
@@ -256,7 +273,31 @@ function Assistant() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
+            {(appointmentMode) && <div className='chatBox apmode rounded-2xl flex h-4/6 xs:w-1/4 w-2/4 antialiased text-gray-800 '>
+                <div className="flex flex-row h-full w-full overflow-x-hidden">
+                    <div className="flex flex-col flex-auto h-full">
+                        {(!appointLoading) && <div className="flex flex-col flex-auto flex-shrink-0 overflow-x-auto rounded-2xl  h-full p-2">
+                            <Appointmentmode response={response} user={userData} specialist={specialist} />
+                        </div>}
+                        {(appointLoading) && <div className="flex flex-col flex-auto flex-shrink-0 overflow-x-auto rounded-2xl  h-full p-2">
+                            <div className="flex flex-col  h-full overflow-x-auto mb-4">
+                                <div className="flex flex-col justify-end items-end h-full ">
+                                    <div className="flex flex-col h-full w-full items-center justify-center ">
+                                        <h2 className='text text-white'>
+                                            Switching to Appointment mode...
+                                        </h2>
+                                        <p className='text text-white'>
+                                            Only post genuene problems and details
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>}
+                    </div>
+                </div>
+            </div>}
+
         </div>
     )
 }
