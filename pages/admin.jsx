@@ -37,7 +37,7 @@ function admin() {
 
 
     return (
-        <div className='min-h-screen flex items-center justify-center flex-col'>
+        <div className='min-h-screen min-w-screen flex items-center justify-center flex-col'>
             {loadin ? <div className='text-2xl'>Loading...</div> : isAdmin ? <Adminhome /> : <div className='text-2xl'>
                 You are not the admin of this page. Redirecting to home page...
             </div>}
