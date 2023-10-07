@@ -182,13 +182,13 @@ function Assistant() {
     }
 
     return (
-        <div className='h-screen flex justify-center items-center flex-col'>
+        <div className='h-screen flex justify-center items-center flex-col w-full '>
             <h2 className='text p-5 sm:text-xl text-3xl text-warning font-bold'>Ask Dr. Cap, our GPT-3 Powered AI Doctor, assisting you with your problem</h2>
-            {(!appointmentMode) && <div className="chatBox flex h-5/6 w-3/4 antialiased text-gray-800 ">
+            {(!appointmentMode) && <div className="chatBox flex h-5/6 w-3/4 antialiased text-gray-600 ">
                 <div className="flex flex-row h-full w-full overflow-x-hidden">
                     <div className="flex flex-col flex-auto h-full p-6">
                         <div
-                            className="flex flex-col flex-auto flex-shrink-0 overflow-x-auto rounded-2xl bg-gray-800 h-full p-4"
+                            className="flex flex-col flex-auto flex-shrink-0 overflow-x-auto rounded-2xl bg-slate-800 h-full p-4"
                         >
                             <div className="flex flex-col  h-full overflow-x-auto mb-4">
                                 <div className="flex flex-col justify-end items-end h-full ">
@@ -260,9 +260,9 @@ function Assistant() {
                                                 xmlns="http://www.w3.org/2000/svg"
                                             >
                                                 <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
                                                     d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                                                 ></path>
                                             </svg>

@@ -1,4 +1,18 @@
 import React, { useEffect } from 'react'
+var doctors = [
+    {
+        name: 'Dr. Ram Karki',
+    },
+    {
+        name: 'Dr. Sita Jaiswal',
+    },
+    {
+        name: 'Dr. Hari Bahadur',
+    },
+    {
+        name: 'Dr. Gita Karki',
+    },
+]
 
 function Appointmentmode({ response, user, specialist }) {
     var [messages, setMessages] = React.useState([])
@@ -14,7 +28,7 @@ function Appointmentmode({ response, user, specialist }) {
     }, [response])
 
     return (
-        <div>
+        <div className='relative h-full gap-0'>
             {
                 messages.map((message, index) => {
                     if (message.type === "ai") {
@@ -25,6 +39,51 @@ function Appointmentmode({ response, user, specialist }) {
                 }
                 )
             }
+            <AIresponse response="These are the doctors with the speciality. Wanna Appoint with one of them?" />
+            {doctors.map((doctor, index) => {
+                return (
+                    <AIresponse key={index} response={doctor.name} />
+                )
+            })}
+            <div
+                className="flex flex-row items-center h-16 rounded-xl absolute bottom-1 w-full px-4"
+            >
+
+                <div className="flex-grow ml-4">
+                    <div className="relative w-full">
+                        <input
+                            placeholder='Chat with Dr. Cap'
+                            type="text"
+                            className="flex w-full border p-3 rounded-xl focus:outline-none focus:border-indigo-300 "
+                        />
+
+                    </div>
+                </div>
+                <div className="ml-4">
+                    <button
+                        className="btn btn-primary"
+
+                    >
+                        <span>Send</span>
+                        <span className="ml-2">
+                            <svg
+                                className="w-4 h-4 transform rotate-45 -mt-px"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                ></path>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }
