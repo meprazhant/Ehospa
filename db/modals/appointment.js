@@ -29,6 +29,18 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    status: {
+        type: String,
+    },
+    prescription: {
+        type: String,
+    },
+    doctorNote: {
+        type: String,
+    },
+    checkedBy: {
+        type: String,
+    },
 }, {
     timestamps: true
 }

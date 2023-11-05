@@ -3,10 +3,13 @@ import BookAppoint from './BookAppoint'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import AppointSkel from './AppointSkel'
+import ViewAppointment from '../../Appointments/ViewAppointment'
 
 function Appointment() {
     let [appointments, setAppointments] = useState([])
     var [loading, setLoading] = useState(true)
+    const [appointment, setAppointment] = useState({})
+    const [clicked, setClicked] = useState(false)
 
     function getallAppointments() {
         fetch('/api/appointment/getall')
@@ -22,7 +25,13 @@ function Appointment() {
         getallAppointments()
     }
         , [])
+    
 
+
+
+    function closePop() {
+        document.getElementById('close').click()
+    }
 
     return (
         <div className="flex-1 px-2 sm:px-0">
@@ -44,10 +53,10 @@ function Appointment() {
                 <dialog id="my_modal_4" className="modal">
                     <div className="modal-box w-11/12 max-w-5xl">
                         <h3 className="font-bold text-lg">Book an Appointment</h3>
-                        <BookAppoint />
+                        <BookAppoint successs={getallAppointments} closepop={closePop}/>
                         <div className="modal-action">
                             <form method="dialog">
-                                <button className="btn">Close</button>
+                                <button id='close' className="btn">Close</button>
                             </form>
                         </div>
                     </div>
@@ -58,10 +67,14 @@ function Appointment() {
                     dayjs.extend(relativeTime)
                     let reqdate
                     reqdate = (dayjs(date).fromNow())
+                    function clickedAppointment() {
+                        setClicked(true)
+                        setAppointment(appointment)
+                    }
                     if (date > today) {
                         return (
 
-                            <div className="relative group bg-green-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
+                            <div onClick={()=>clickedAppointment(appointment)} className="relative group bg-green-900 py-10 sm:py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/80 hover:smooth-hover">
                                 <img className="w-20 h-20 object-cover object-center rounded-full" src="https://s-media-cache-ak0.pinimg.com/originals/26/4e/30/264e30439c42387c1e3c48d2d038429d.png" alt="cuisine" />
                                 <h4 className="text-white text-2xl font-bold capitalize text-center">{appointment.category}</h4>
                                 <p className="text-white/50">{reqdate} | Queue Number {appointment.queueNumber}</p>
@@ -91,6 +104,11 @@ function Appointment() {
                     <AppointSkel />
                     <AppointSkel />
                 </>}
+
+                {(clicked) && <div className="fixed top-0 left-0 h-screen w-full z-50 inset-0 flex justify-center items-center backdrop-blur-sm overflow-y-auto">
+                        <ViewAppointment data={appointment} />
+                    </div>
+                    }
             </div>
         </div>
     )
