@@ -2,6 +2,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import AppointmentCard from "../../components/Doctors/AppointmentCard";
+import Head from "next/head";
 
 function Doctor() {
     const [loading, setLoading] = React.useState(true)
@@ -10,6 +11,7 @@ function Doctor() {
     const [auth, setAuth] = React.useState(false)
     const [doctor, setDoctor] = React.useState({})
     const [categoryAppointment, setCategoryAppointment] = React.useState([])
+    const [futureAppointments, setFutureAppointments] = React.useState([])
     var router = useRouter()
 
 
@@ -66,7 +68,6 @@ function Doctor() {
             let date = new Date(item.appointmentDate)
             return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear()
         })
-        console.log(todayAppointments)
         let myAppointment = todayAppointments.filter((item) => {
             return item.dedicatedDoctor == doctor.name
         }
@@ -81,15 +82,30 @@ function Doctor() {
 
         setCategoryAppointment(categAppointment)
 
+        // get all appointmen of future date with the same doctor
+        let futureAppointments = e.filter((item) => {
+            let date = new Date(item.appointmentDate)
+            return date.getDate() > today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()
+        })
+
+        setFutureAppointments(futureAppointments)
+
+
         console.log(categAppointment, myAppointment, todayAppointments)
 
 
     }
 
+    const [show, setShow] = React.useState(false)
+
     if (loading) return (<div>Loading...</div>)
 
     return (
         <div className="flex h-screen bg-gray-800">
+            <Head>
+                <title>Doctor Dashboard</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <div className="flex-1 flex flex-col overflow-hidden">
                 <header className="flex justify-between items-center py-4 px-6 bg-gray-800 border-b-4 border-indigo-600">
                     <div className="flex items-center">
@@ -114,13 +130,23 @@ function Doctor() {
                     </div>
                     <div className="flex items-center">
                         <div className="relative">
-                            <button className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-500 ease-in-out">
+                            <button onClick={() => setShow(!show)} className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-500 ease-in-out">
                                 <img
                                     className="h-8 w-8 rounded-full object-cover"
-                                    src="https://avatars0.githubusercontent.com/u/9919?s=280&v=4"
+                                    src={doctor.image}
+                                    referrerPolicy="no-referrer"
                                     alt="Your avatar"
                                 />
                             </button>
+                            {/* logout button with ai icon */}
+                            {(show) && <div className="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10">
+                                <a
+                                    href="/logout"
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+                                >
+                                    Logout
+                                </a>
+                            </div>}
                         </div>
                     </div>
                 </header>
@@ -133,28 +159,53 @@ function Doctor() {
                                     <div className="flex flex-col gap-3 px-5 py-6 shadow-sm rounded-md bg-slate-700">
                                         <p>Your todays Appointments</p>
 
-                                        <div className="flex gap-2">
+                                        {(myAppointment.length != 0) && <div className="flex gap-2">
                                             {myAppointment.map((item) => {
                                                 return (
                                                     <AppointmentCard save={getallAppointment} doctor={doctor.name} item={item} />
                                                 )
                                             })}
-                                        </div>
+                                        </div>}
+
+                                        {(myAppointment.length == 0) && <div className="flex gap-2">
+                                            <p className="text-white/50">No Appointments for today</p>
+                                        </div>}
+
                                     </div>
                                 </div>
 
                                 <div className="w-full min-w-fit mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
                                     <div className="flex flex-col gap-3 px-5 py-6 shadow-sm rounded-md bg-slate-700">
-                                        <p>All today's Cardiological Appointments</p>
-                                        <div className="flex gap-2">
+                                        <p>All today's {doctor.speciality} Appointments</p>
+                                        {(categoryAppointment.length != 0) && <div className="flex gap-2">
                                             {categoryAppointment.map((item) => {
                                                 return (
                                                     <AppointmentCard save={getallAppointment} doctor={doctor} item={item} />
                                                 )
                                             })}
-                                        </div>
+                                        </div>}
+                                        {(categoryAppointment.length == 0) && <div className="flex gap-2">
+                                            <p className="text-white/50">No Appointments for today</p>
+                                        </div>}
                                     </div>
                                 </div>
+
+                                <div className="w-full min-w-fit mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+                                    <div className="flex flex-col gap-3 px-5 py-6 shadow-sm rounded-md bg-slate-700">
+                                        <p>Your All Appointments</p>
+                                        {(futureAppointments.length != 0) && <div className="flex gap-2">
+                                            {futureAppointments.map((item) => {
+                                                return (
+                                                    <AppointmentCard save={getallAppointment} doctor={doctor} item={item} />
+                                                )
+                                            })}
+                                        </div>}
+                                        {(futureAppointments.length == 0) && <div className="flex gap-2">
+                                            <p className="text-white/50">You dont have any appointment</p>
+                                        </div>}
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
