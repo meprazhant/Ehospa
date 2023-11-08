@@ -1,7 +1,28 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
-function Booked(data,{closepop}) {
+function Booked(data, { closepop }) {
+    function sendMail() {
+        fetch('/api/mails/sendMail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: data.data.email,
+                queueNumber: data.data.queueNumber,
+                appointDate: data.data.appointmentDate,
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
+    }
+    useEffect(() => {
+        sendMail()
+    }, [])
+
     return (
         <div
             role="alert"
@@ -43,7 +64,7 @@ function Booked(data,{closepop}) {
 
                     </p>
 
-                  
+
                 </div>
 
                 <button

@@ -31,9 +31,10 @@ const appointmentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
+        default: 'pending',
     },
     prescription: {
-        type: String,
+        type: Array,
     },
     doctorNote: {
         type: String,
