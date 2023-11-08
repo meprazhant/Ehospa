@@ -12,6 +12,7 @@ function Doctor() {
     const [doctor, setDoctor] = React.useState({})
     const [categoryAppointment, setCategoryAppointment] = React.useState([])
     const [futureAppointments, setFutureAppointments] = React.useState([])
+    const [completedAppointment, setcompletedAppointment] = React.useState([])
     var router = useRouter()
 
 
@@ -36,10 +37,12 @@ function Doctor() {
         , [])
 
     function getallAppointment() {
-        fetch('/api/appointment/getall')
+        fetch('/api/appointment/getallappointment')
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 setAppointments(data.data)
+                console.log(data.data)
                 classifyAppointment(data.data)
                 setLoading(false)
             })
@@ -88,10 +91,24 @@ function Doctor() {
             return date.getDate() > today.getDate() && date.getMonth() >= today.getMonth() && date.getFullYear() >= today.getFullYear()
         })
 
+        // get today but completed and doctor name is same
+        let completedAppointments = e.filter((item) => {
+            let date = new Date(item.appointmentDate)
+            return date.getDate() === today.getDate() &&
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear() &&
+                item.dedicatedDoctor === doctor.name;
+        }
+        )
+
+        setcompletedAppointment(completedAppointments)
+        console.log(completedAppointments)
+
+
         setFutureAppointments(futureAppointments)
 
 
-        console.log(categAppointment, myAppointment, todayAppointments)
+        console.log(todayAppointments, categAppointment, myAppointment)
 
 
     }
@@ -190,21 +207,24 @@ function Doctor() {
                                     </div>
                                 </div>
 
-                                <div className="w-full min-w-fit mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+                                <div className="w-full min-w-fit mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
                                     <div className="flex flex-col gap-3 px-5 py-6 shadow-sm rounded-md bg-slate-700">
-                                        <p>Your All Appointments</p>
-                                        {(futureAppointments.length != 0) && <div className="flex gap-2">
-                                            {futureAppointments.map((item) => {
+                                        <p>Your Completed Appointments</p>
+                                        {(completedAppointment.length != 0) && <div className="flex gap-2">
+                                            {completedAppointment.map((item) => {
                                                 return (
                                                     <AppointmentCard save={getallAppointment} doctor={doctor} item={item} />
                                                 )
                                             })}
                                         </div>}
-                                        {(futureAppointments.length == 0) && <div className="flex gap-2">
-                                            <p className="text-white/50">You dont have any appointment</p>
+                                        {(completedAppointment.length == 0) && <div className="flex gap-2">
+                                            <p className="text-white/50">No Completed Appointments</p>
                                         </div>}
                                     </div>
                                 </div>
+
+
+
 
                             </div>
                         </div>
